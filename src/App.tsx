@@ -274,6 +274,7 @@ function CodePane({ attempt, previous }: { attempt: Doc<"attempts">; previous?: 
                 {text || " "}
               </div>
             ))}
+        {writing && !attempt.code && <span className="muted">{"// thinking…"}</span>}
         {writing && <span className="cursor" />}
       </div>
     </div>

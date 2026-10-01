@@ -153,6 +153,7 @@ export const finishRun = internalMutation({
 export const createAttempt = internalMutation({
   args: { runId: v.id("runs"), number: v.number() },
   handler: async (ctx, { runId, number }) => {
+    if (!(await ctx.db.get("runs", runId))) throw new Error("Run was reset");
     if (number > 1) await ctx.db.patch("runs", runId, { status: "fixing" });
     return await ctx.db.insert("attempts", { runId, number, code: "", status: "writing" });
   },

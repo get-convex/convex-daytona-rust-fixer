@@ -127,6 +127,9 @@ async function writeCode(ctx: ActionCtx, run: Doc<"runs">, number: number, promp
     system: SYSTEM_PROMPT,
     prompt,
     maxOutputTokens: MAX_OUTPUT_TOKENS,
+    // No extended thinking: code starts streaming in ~1s instead of 5-20s.
+    // The compiler is the reviewer here.
+    providerOptions: { convexGateway: { reasoning: { enabled: false } } },
     onError: ({ error }) => {
       streamError = error;
     },
