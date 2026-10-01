@@ -272,7 +272,7 @@ function CodePane({ attempt, previous }: { attempt: Doc<"attempts">; previous?: 
                 {l.text || " "}
               </div>
             ))
-          : attempt.code.split("\n").map((text, i) => (
+          : attempt.code && attempt.code.split("\n").map((text, i) => (
               <div key={i} className="line">
                 <span className="gutter">{i + 1}</span>
                 {text || " "}
