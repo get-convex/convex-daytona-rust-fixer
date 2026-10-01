@@ -68,7 +68,7 @@ export const fix = internalAction({
       const state = await ctx.runQuery(internal.runs.getRun, { runId });
       if (!state || state.run.finished) return; // reset while we were away
       const previous = state.attempts[state.attempts.length - 1];
-      const errors = stripAnsi(previous.log ?? "").slice(-8_000);
+      const errors = stripAnsi(previous.log ?? "").slice(0, 8_000);
       const attempt = await writeCode(ctx, state.run, number, fixPrompt(state.run.prompt, previous.code, errors));
       await launchBuild(ctx, state.run, state.run.sandboxId!, attempt);
     });

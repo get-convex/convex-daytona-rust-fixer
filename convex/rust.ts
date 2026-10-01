@@ -33,7 +33,8 @@ cargo build output:
 
 ${errors}
 
-Fix every error and warning. Output the complete corrected src/main.rs.`;
+Fix every error and warning at its cause: use the code or remove it. Don't silence
+warnings with #[allow(...)]. Output the complete corrected src/main.rs.`;
 }
 
 /** Strip terminal colour codes (the LLM wants plain text, the UI wants colour). */

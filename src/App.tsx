@@ -17,6 +17,10 @@ const EXAMPLES = [
       "Word frequency counter for the text below, printing the top 5 words with a bar chart.\n\nThe quick brown fox jumps over the lazy dog. The dog sleeps. The fox runs away, and the quick dog follows the fox.",
   },
   { label: "Binary search tree", prompt: "A generic binary search tree with insert, remove and an in-order iterator, with a small demo in main" },
+  {
+    label: "Matrix",
+    prompt: "A Matrix struct with add, multiply, transpose, determinant and identity methods. In main, only demonstrate multiply on two 2x2 matrices.",
+  },
   { label: "Game of Life", prompt: "Conway's Game of Life: print 4 generations of a glider on a 10x10 grid using # and ." },
 ];
 

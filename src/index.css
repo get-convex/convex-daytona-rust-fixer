@@ -17,6 +17,13 @@
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
+/* Show code exactly as typed: no != to ≠ ligatures. */
+code,
+pre,
+.code {
+  font-variant-ligatures: none;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -485,7 +492,8 @@ h2 {
   position: relative;
   margin: 0;
   padding: 14px 16px;
-  height: 500px;
+  /* Fit code, log and program output on one 1080p screen. */
+  height: clamp(300px, calc(100vh - 640px), 640px);
   overflow: auto;
   font-family: var(--mono);
   font-size: 14.5px;
@@ -513,8 +521,6 @@ h2 {
 
 .line.del {
   background: color-mix(in srgb, var(--red) 13%, transparent);
-  text-decoration: line-through;
-  text-decoration-color: color-mix(in srgb, var(--red) 50%, transparent);
 }
 
 .plus {
@@ -617,7 +623,7 @@ h2 {
 
 .output .pane-body {
   height: auto;
-  max-height: 340px;
+  max-height: 300px;
 }
 
 .exit {

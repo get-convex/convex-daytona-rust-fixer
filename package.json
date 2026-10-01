@@ -10,7 +10,9 @@
     "dev:frontend": "vite",
     "build": "vite build",
     "typecheck": "tsc --noEmit && tsc --noEmit -p convex",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "deploy": "npx @convex-dev/static-hosting deploy",
+    "reset": "npx convex run reset:resetDemo"
   },
   "dependencies": {
     "@convex-dev/ai-sdk-provider": "^0.2.1",
@@ -36,5 +38,6 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.71.0",
     "vite": "^8.3.1"
-  }
+  },
+  "description": "Ask for a Rust program, compile it in a Daytona sandbox, feed the errors back to the LLM until it compiles. Convex + Daytona example."
 }

@@ -15,7 +15,6 @@ import {
   MAX_PROMPT_CHARS,
   rateLimiter,
 } from "./limits";
-import { attemptStatus } from "./schema";
 
 const SESSION_ID = /^[0-9a-f-]{36}$/;
 const BUSY = "The demo is busy right now. Try again in a few minutes, or run your own copy (link below).";
@@ -160,13 +159,9 @@ export const createAttempt = internalMutation({
 });
 
 export const updateAttempt = internalMutation({
-  args: {
-    attemptId: v.id("attempts"),
-    code: v.optional(v.string()),
-    status: v.optional(attemptStatus),
-  },
-  handler: async (ctx, { attemptId, ...fields }) => {
-    if (await ctx.db.get("attempts", attemptId)) await ctx.db.patch("attempts", attemptId, fields);
+  args: { attemptId: v.id("attempts"), code: v.string() },
+  handler: async (ctx, { attemptId, code }) => {
+    if (await ctx.db.get("attempts", attemptId)) await ctx.db.patch("attempts", attemptId, { code });
   },
 });
 
@@ -182,7 +177,7 @@ export const buildStarted = internalMutation({
       buildStartedAt: Date.now(),
     });
     await ctx.db.patch("runs", attempt.runId, { status: "building" });
-    await ctx.scheduler.runAfter(250, internal.runs.checkBuild, { attemptId, delayMs: 250 });
+    await ctx.scheduler.runAfter(300, internal.runs.checkBuild, { attemptId, delayMs: 300 });
   },
 });
 
@@ -200,7 +195,7 @@ export const checkBuild = internalMutation({
 
     const timedOut = Date.now() - attempt.buildStartedAt! > BUILD_TIMEOUT_MS;
     if (execution?.status === "running" && !timedOut) {
-      const next = Math.min(delayMs * 2, 2_000);
+      const next = Math.min(delayMs * 1.5, 2_000);
       await ctx.scheduler.runAfter(next, internal.runs.checkBuild, { attemptId, delayMs: next });
       return;
     }
